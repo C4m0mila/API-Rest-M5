@@ -1,51 +1,18 @@
-// import {openDb} from './configDB.js';
-import { createTable, insertPonto, updatePonto, selectAllPontos, selectPonto, deletePonto } from './controller/controlePonto.js'
-
 import express from 'express';
+import fs from 'fs';
+import https from 'https';
+import cors from 'cors';
+
 const app = express();
 app.use(express.json());
+app.use(cors());
 
-createTable();
-
-app.get('/', function (req, res){
-    res.send('Api rodando');
-});
-
-app.get('/Pontos',  async function (req, res){
-let Pontos = await selectAllPontos();
-res.json(Pontos)
-});
-
-app.get('/Ponto',  async function (req, res){
-    let Ponto = await selectPonto(req.body.id);
-    res.json(Ponto)
-    });
-
-app.post('/Ponto', function (req, res){
-    insertPonto(req.body)
-    res.json({
-        "statusCode": 200
-    })
-})
-
-app.put('/Ponto', function (req, res){
-    if(req.body && !req.body.id){
-        res.json({
-            "statusCode": "400",
-        "msg": "Você precisa informar um id"
-        })
-    } else{
-        updatePonto(req.body)
-        res.json({
-            "statusCode": 200
-        })
-    }
-})
-
-app.delete('/Ponto',  async function (req, res){
-    let Ponto = await deletePonto();
-    res.json(Ponto) 
-    });
+import Router from './routes/routes.js'
+app.use(Router)
 
 app.listen(3000, () => console.log("Api rodando."));
 
+https.createServer({
+cert: fs.readFileSync('src/ssl/code.crt'),
+key: fs.readFileSync('src/ssl/code.key')
+}, app).listen(3001, () => console.log('Rodando em https'));
