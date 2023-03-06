@@ -2,7 +2,7 @@ import { openDb } from '../configDB.js';
 
 export async function createTable() {
   openDb().then(db => {
-    db.exec('CREATE TABLE IF NOT EXISTS Ponto (id INTEGER PRIMARY KEY AUTOINCREMENT, funcionario TEXT, dia DATE NOT NULL, entrada TIME DEFAULT NULL, saida TIME DEFAULT NULL)')
+    db.exec('CREATE TABLE IF NOT EXISTS Ponto (id INTEGER PRIMARY KEY, funcionario TEXT, dia DATE NOT NULL, entrada TIME DEFAULT NULL, saida TIME DEFAULT NULL)')
     console.log('Tabela criada com sucesso');
   }).catch((error) => {
     console.error(error);
