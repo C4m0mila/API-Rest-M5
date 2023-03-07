@@ -1,4 +1,5 @@
-import { openDb } from '../configDB.js';
+import { openDb } from '../config/configDB.js';
+import PontoDAO from '../config/pontoDao.js';
 
 export async function createTable() {
   openDb().then(db => {
@@ -17,7 +18,7 @@ export async function selectAllPontos(req, res) {
 }
 
 export async function selectPonto(req, res) {
-  let id = req.body.id
+  let id = req.params.id
   openDb().then(db => {
     db.get('SELECT * from Ponto WHERE id=?', [id])
       .then(Ponto => res.json(Ponto))
@@ -43,7 +44,7 @@ export async function insertPonto(req, res) {
 }
 
 export async function updatePonto(req, res) {
-  let Ponto = req.body;
+  let Ponto = req.params;
   openDb().then(db => {
     db.run('UPDATE Ponto SET funcionario=?, dia=?, entrada=?, saida=? WHERE id=?', [Ponto.funcionario, Ponto.dia, Ponto.entrada, Ponto.saida, Ponto.id]);
   }).then(() => {
@@ -60,7 +61,7 @@ export async function updatePonto(req, res) {
 }
 
 export async function deletePonto(req, res) {
-  let id = req.body.id
+  let id = req.params.id
   openDb().then(db => {
     db.get('DELETE from Ponto WHERE id=?', [id])
   });

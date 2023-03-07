@@ -11,9 +11,9 @@ router.get('/', (req, res) => {
 })
 
 router.get('/Pontos', selectAllPontos);
-router.get('/Ponto', selectPonto);
+router.get('/Ponto/:id', selectPonto);
 router.post('/Ponto', insertPonto);
-router.put('/Ponto', updatePonto);
-router.delete('/Ponto', deletePonto);
+router.put('/Ponto/:id', updatePonto);
+router.delete('/Ponto/:id', deletePonto);
 
 export default router

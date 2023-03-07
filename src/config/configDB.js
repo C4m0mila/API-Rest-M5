@@ -9,7 +9,7 @@ import { open } from 'sqlite'
 //Exportando a função openDb()
 export async function openDb () {
   return open({
-    filename: './database.db',
+    filename: 'database.db',
     driver: sqlite3.Database
   })
 }
